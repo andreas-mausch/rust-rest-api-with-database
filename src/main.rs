@@ -1,5 +1,7 @@
 use clap::Parser;
+use env_logger::{Builder, Env};
 use iron::{Iron, IronResult, Request, Response, status};
+use log::info;
 
 /// Basic HTTP REST API Service
 #[derive(Parser, Debug)]
@@ -15,6 +17,10 @@ fn hello(_: &mut Request) -> IronResult<Response> {
 }
 
 fn main() {
+    Builder::from_env(Env::default().default_filter_or("debug")).init();
+
     let args = Args::parse();
+
+    info!("Starting server on port 127.0.0.1:{}", args.port);
     Iron::new(hello).http(("127.0.0.1", args.port)).unwrap();
 }
