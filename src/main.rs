@@ -22,5 +22,5 @@ fn main() {
     let args = Args::parse();
 
     info!("Starting server on port 127.0.0.1:{}", args.port);
-    Iron::new(hello).http(("127.0.0.1", args.port)).unwrap();
+    Iron::new(hello).http(("127.0.0.1", args.port)).expect("Cannot start server");
 }
