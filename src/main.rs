@@ -1,7 +1,16 @@
+use Attr::Charset;
 use clap::Parser;
 use env_logger::{Builder, Env};
 use iron::{Iron, IronResult, Request, Response, status};
+use iron::headers::ContentType;
+use iron::mime::{Attr, Mime, SubLevel, TopLevel, Value};
+use iron::modifiers::Header;
 use log::info;
+use SubLevel::Json;
+use TopLevel::Application;
+use Value::Utf8;
+
+use serde::{Deserialize, Serialize};
 
 /// Basic HTTP REST API Service
 #[derive(Parser, Debug)]
@@ -12,8 +21,21 @@ pub struct Args {
     port: u16,
 }
 
+#[derive(Serialize, Deserialize)]
+struct User {
+    name: String,
+    year_of_birth: u32,
+}
+
 fn hello(_: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((status::Ok, "Hello, world!")))
+    let user = User {
+        name: "David Fincher".to_string(),
+        year_of_birth: 1962,
+    };
+    let json = serde_json::to_string(&user).unwrap();
+
+    let header = Header(ContentType(Mime(Application, Json, vec![(Charset, Utf8)])));
+    Ok(Response::with((status::Ok, json, header)))
 }
 
 fn main() {
