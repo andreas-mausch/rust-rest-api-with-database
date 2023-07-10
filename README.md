@@ -22,3 +22,9 @@ Less verbose logging level (see [here](https://docs.rs/env_logger/latest/env_log
 ```bash
 RUST_LOG=warn cargo run
 ```
+
+Run on a different port:
+
+```bash
+cargo run -- --port 8000
+```
