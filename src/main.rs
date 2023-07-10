@@ -17,7 +17,7 @@ use serde::{Deserialize, Serialize};
 #[command(author, version, about, long_about = None)]
 pub struct Args {
     /// Port to listen on
-    #[arg(short, long, default_value_t = 8080)]
+    #[arg(short, long, env, default_value_t = 8080)]
     port: u16,
 }
 
