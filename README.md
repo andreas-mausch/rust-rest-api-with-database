@@ -70,5 +70,5 @@ Run on a different port:
 ```bash
 cargo run -- --port 8000
 # Alternative:
-# PORT=1234 cargo run
+# PORT=8000 cargo run
 ```
