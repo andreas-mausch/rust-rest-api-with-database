@@ -4,6 +4,14 @@ A small sample project to showcase a REST web service with a database using
 - [diesel - a Safe, Extensible ORM and Query Builder](https://diesel.rs/)
 - [serde - a framework for serializing and deserializing](https://serde.rs/)
 
+# TODO
+
+- Create `diesel migration` scripts for the user table
+- Store three default users in the database
+- Run migrations at the start of the application
+- Create new endpoints /users/1 and /users/all and connect them to the database
+- Add field `created_at: NaiveDateTime` (chrono)
+
 # Development
 
 ## Requirements
