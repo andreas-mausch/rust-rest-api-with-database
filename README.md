@@ -10,6 +10,24 @@ A small sample project to showcase a REST web service with a database using
 
 - Rustup >= 1.26.0
 - Rust >= 1.70.0
+- Diesel CLI >= 2.1.0
+
+## Database migrations: Diesel setup
+
+### Start local database via docker
+
+```bash
+docker run -it --rm -p 26257:26257 -p 26258:8080 -e COCKROACH_DATABASE=rust cockroachdb/cockroach start-single-node --insecure
+```
+
+### Install Diesel CLI
+
+I used this command:
+
+```bash
+cargo install diesel_cli --no-default-features --features "postgres sqlite"
+diesel setup --database-url "postgresql://root@172.17.0.1:26257/rust?sslmode=disable"
+```
 
 ## Start server in development mode
 
