@@ -41,7 +41,7 @@ diesel --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable" mi
 ## Start server in development mode
 
 ```bash
-cargo run
+cargo run -- --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable"
 ```
 
 Less verbose logging level (see [here](https://docs.rs/env_logger/latest/env_logger/#enabling-logging)):
@@ -58,6 +58,14 @@ cargo run -- --port 8000
 # PORT=8000 cargo run
 ```
 
+## HTTP example queries
+
+```bash
+curl http://localhost:8080
+curl http://localhost:8080/query
+curl http://localhost:8080/insert
+```
+
 # Technology decisions
 
 ## iron vs. Actix and Rocket
@@ -66,6 +74,8 @@ I was looking for a HTTP library rather than a full-blown framework which forces
 
 I'm not sure whether iron is the best choice here, because a lot of stuff has to be done manually,
 even basic features like json responses. But it is a start.
+
+Turns out [iron is already deprecated](https://github.com/DavidBM/rust-webserver-example-with-iron-diesel-r2d2-serde)?
 
 ## Thoughts on Diesel
 
