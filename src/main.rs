@@ -54,7 +54,7 @@ fn insert(_: &mut Request) -> IronResult<Response> {
         year_of_birth: 1962,
     };
 
-    DATABASE_URL.lock().unwrap().as_mut().and_then(|connection| {
+    DATABASE.lock().unwrap().as_mut().and_then(|connection| {
         diesel::insert_into(users)
             .values(&user)
             .execute(connection)
@@ -65,7 +65,7 @@ fn insert(_: &mut Request) -> IronResult<Response> {
 }
 
 fn query(_: &mut Request) -> IronResult<Response> {
-    let user = DATABASE_URL.lock().unwrap().as_mut().and_then(|connection| {
+    let user = DATABASE.lock().unwrap().as_mut().and_then(|connection| {
         users.select(User::as_select())
             .load(connection)
             .ok()
@@ -82,13 +82,13 @@ fn connect(database_url: &str) -> PgConnection {
     PgConnection::establish(database_url).expect("Cannot connect to database")
 }
 
-static DATABASE_URL: Mutex<Option<PgConnection>> = Mutex::new(None);
+static DATABASE: Mutex<Option<PgConnection>> = Mutex::new(None);
 
 fn main() {
     Builder::from_env(Env::default().default_filter_or("debug")).init();
 
     let args = Args::parse();
-    *DATABASE_URL.lock().unwrap() = Some(connect(&args.database_url));
+    *DATABASE.lock().unwrap() = Some(connect(&args.database_url));
 
     info!("Starting server on port 127.0.0.1:{}", args.port);
 
