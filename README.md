@@ -34,7 +34,8 @@ I used this command:
 
 ```bash
 cargo install diesel_cli --no-default-features --features "postgres sqlite"
-diesel setup --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable"
+diesel --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable" setup
+diesel --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable" migration run
 ```
 
 ## Start server in development mode
