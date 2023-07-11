@@ -34,7 +34,7 @@ I used this command:
 
 ```bash
 cargo install diesel_cli --no-default-features --features "postgres sqlite"
-diesel setup --database-url "postgresql://root@172.17.0.1:26257/rust?sslmode=disable"
+diesel setup --database-url "postgres://root@172.17.0.1:26257/rust?sslmode=disable"
 ```
 
 ## Start server in development mode
@@ -81,3 +81,6 @@ because of the slightly different syntax for each database vendor. :(
 I had the same problem at [homecloud](https://gitlab.com/neonews-homecloud/api/). I used Liquibase there to solve this,
 and they solved the problem by using their very own file format (see example
 [here](https://gitlab.com/neonews-homecloud/api/-/blob/89843abb601e296c6bdfc6cfc53c6d91d6b2096c/resources/de/neonew/homecloud/database/migration/001_users-table.yaml)).
+
+It is very unpleasent diesel requires the devs to write .sql files manually, instead of generating them from
+the structs in code.
