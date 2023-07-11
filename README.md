@@ -37,22 +37,6 @@ cargo install diesel_cli --no-default-features --features "postgres sqlite"
 diesel setup --database-url "postgresql://root@172.17.0.1:26257/rust?sslmode=disable"
 ```
 
-### Thoughts on Diesel
-
-I think it is a pity there is no real Standard for SQL (despite it's name).
-In my projects I like to support
-
-- Postgres for production databases
-- sqlite when low performance is sufficient
-- h2 for integration tests
-
-With Diesel, I would need to have (and maintain) three different versions of the same migration script,
-because of the slightly different syntax for each database vendor. :(
-
-I had the same problem at [homecloud](https://gitlab.com/neonews-homecloud/api/). I used Liquibase there to solve this,
-and they solved the problem by using their very own file format (see example
-[here](https://gitlab.com/neonews-homecloud/api/-/blob/89843abb601e296c6bdfc6cfc53c6d91d6b2096c/resources/de/neonew/homecloud/database/migration/001_users-table.yaml)).
-
 ## Start server in development mode
 
 ```bash
@@ -72,3 +56,28 @@ cargo run -- --port 8000
 # Alternative:
 # PORT=8000 cargo run
 ```
+
+# Technology decisions
+
+## iron vs. Actix and Rocket
+
+I was looking for a HTTP library rather than a full-blown framework which forces you to replace the main function.
+
+I'm not sure whether iron is the best choice here, because a lot of stuff has to be done manually,
+even basic features like json responses. But it is a start.
+
+## Thoughts on Diesel
+
+I think it is a pity there is no real Standard for SQL (despite it's name).
+In my projects I like to support
+
+- Postgres for production databases
+- sqlite when low performance is sufficient
+- h2 for integration tests
+
+With Diesel, I would need to have (and maintain) three different versions of the same migration script,
+because of the slightly different syntax for each database vendor. :(
+
+I had the same problem at [homecloud](https://gitlab.com/neonews-homecloud/api/). I used Liquibase there to solve this,
+and they solved the problem by using their very own file format (see example
+[here](https://gitlab.com/neonews-homecloud/api/-/blob/89843abb601e296c6bdfc6cfc53c6d91d6b2096c/resources/de/neonew/homecloud/database/migration/001_users-table.yaml)).
