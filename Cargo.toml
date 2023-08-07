@@ -10,6 +10,7 @@ clap = { version = "4.3.11", features = ["derive", "env"] }
 diesel = { version = "2.1.0", features = ["postgres", "sqlite"] }
 env_logger = "0.10.0"
 iron = "0.6.1"
+iron-test = "0.6.0"
 log = "0.4.19"
 router = "0.6.0"
 serde = { version = "1.0.171", features = ["derive"] }
